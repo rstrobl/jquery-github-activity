@@ -1,4 +1,4 @@
-# jQuery GitHub Activity
+# jquery-github-activity
 
 This plugin renders the activity of github users as a list to a given element. It makes use of the [GitHub API v3](http://developer.github.com/v3).
 
