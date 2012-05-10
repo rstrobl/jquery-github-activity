@@ -17,21 +17,21 @@ see http://developer.github.com/v3/events/types/
 * FollowEvent
 * PushEvent
 * WatchEvent
+* IssueCommentEvent
+* IssuesEvent
+* CommitCommentEvent
+* PullRequestEvent
+* DeleteEvent
+* ForkEvent
 
 ### Not yet supported
 
-* CommitCommentEvent
-* DeleteEvent
 * DownloadEvent
-* ForkEvent
 * ForkApplyEvent
 * GistEvent
 * GollumEvent
-* IssueCommentEvent
-* IssuesEvent
 * MemberEvent
 * PublicEvent
-* PullRequestEvent
 * PullRequestReviewCommentEvent
 * TeamAddEvent
 

@@ -1,0 +1,34 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: Helvetica, Arial, Verdana;
+	font-size: 0.9em;
+	font-weight: bold;
+	color: #333;
+	width: 500px;
+	margin: 3em auto;
+}
+
+a {
+	color: #345678;
+	text-decoration: none;
+}
+
+a: hover {
+	text-decoration: underline;
+}
+
+ul {
+	display: block;
+	margin: auto;
+}
+
+li {
+	list-style-type: none;
+	padding: 0.8em;
+	width: 500px;
+	border-bottom: 1px solid #eee;
+}

@@ -10,10 +10,8 @@
 		}
 
 		var repositoryLink = function(repo) {
-			var repositoryName = repo.name.split('/')[1];
-			
 			return $('<a>', {
-			    text: repositoryName,
+			    text: repo.name,
 			    href: githubURL + repo.name
 			})
 		}
@@ -22,10 +20,30 @@
 			return ref.split('refs/heads/')[1]
 		}
 		
+		var issueLink = function(issue) {
+			return $('<a>', {
+			    text: 'issue ' + issue.number,
+			    href: issue.html_url
+			})
+		}
+		
+		var pullRequestLink = function(pull_request, comment) {
+			var url = pull_request.html_url
+			
+			if(typeof comment !== 'undefined') {
+				url += '#issuecomment-' + comment.id
+			}
+			
+			return $('<a>', {
+			    text: 'pull request ' + pull_request.number,
+			    href: url
+			})			
+		}
+		
 		this.each(function() {
 			var el = $(this)
 			
-			var handler = {
+			var renderer = {
 				'CreateEvent': function(event) {
 					return  'created respository ' + repositoryLink(event.repo).prop('outerHTML')
 				},
@@ -37,18 +55,37 @@
 				},
 				'PushEvent': function(event) {
 					return 'pushed to ' + branchName(event.payload.ref) + ' at ' + repositoryLink(event.repo).prop('outerHTML')
+				},
+				'IssueCommentEvent': function(event) {
+					return 'commented on ' + pullRequestLink(event.payload.issue, event.payload.comment).prop('outerHTML') + ' on ' + repositoryLink(event.repo).prop('outerHTML')
+				},
+				'PullRequestEvent': function(event) {
+					return 'opened ' + pullRequestLink(event.payload.pull_request).prop('outerHTML') + ' on ' + repositoryLink(event.repo).prop('outerHTML')
+				},
+				'DeleteEvent': function(event) {
+					return 'deleted ' + event.payload.ref_type + ' ' + event.payload.ref + ' at ' + repositoryLink(event.repo).prop('outerHTML')
+				},
+				'CommitCommentEvent': function(event) {
+					return 'commented on ' + repositoryLink(event.repo).prop('outerHTML')
+				},
+				'IssuesEvent': function(event) {
+					return 'opened ' + issueLink(event.payload.issue).prop('outerHTML') + ' on ' + repositoryLink(event.repo).prop('outerHTML')
+				},		
+				'ForkEvent': function(event) {
+					return 'forked ' + repositoryLink(event.repo).prop('outerHTML')
 				}				
 			}
 
 			$.get('https://api.github.com/users/' + username + '/events?callback=?', function(activity) {				
 				$.each(activity.data, function(index, event) {
-					if(event.type in handler) {
+					if(event.type in renderer) {
 						el.append($('<li>', {
-							html: userLink(event.actor).prop('outerHTML') + ' ' + handler[event.type](event) + ' ' + jQuery.timeago(new Date(event.created_at))
+							html: userLink(event.actor).prop('outerHTML') + ' ' + renderer[event.type](event) + ' ' + jQuery.timeago(new Date(event.created_at))
 						}))
 					}
 					else {
-						console.log('No handler for ' + event.type + ' implemented.')
+						console.log('No renderer for ' + event.type + ' implemented.')
+						console.log(event)
 					}
 				})			
 			}, "json")
