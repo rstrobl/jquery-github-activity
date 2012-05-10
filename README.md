@@ -10,7 +10,10 @@ This plugin renders the activity of github users as a list to a given element. I
 ## Usage
 
 $("textarea").githubActivityFor("username", {
-    'limit': 10		// default and maximum is 30
+    'limit': 10,							// limit number of event, default: 30 (max)
+		'wrap': function(item) {	// post process item element, default: identity
+			return item
+		}
 });
 
 ## Events
@@ -44,6 +47,7 @@ see http://developer.github.com/v3/events/types/
 ## Todo
 
 * additional options to the github-activity function
-  * limit number of rendered events
   * define custom renderers
+  * implement remaining events
+  * support for detailed events
 	

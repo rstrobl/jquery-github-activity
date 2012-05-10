@@ -1,7 +1,11 @@
 (function($) {
 	$.fn.githubActivityFor = function(username, params) {
-		var params = params || {}
 		var githubURL = 'https://github.com/'
+		var params = params || {}
+		
+		if('wrap' in params == false) {
+			params['wrap'] = function(item) { return item }
+		}		
 	
 		var userLink = function(user) {
 			return $('<a>', {
@@ -84,9 +88,9 @@
 					}
 					
 					if(event.type in renderer) {
-						el.append($('<li>', {
+						el.append(params.wrap($('<li>', {
 							html: userLink(event.actor).prop('outerHTML') + ' ' + renderer[event.type](event) + ' ' + jQuery.timeago(new Date(event.created_at))
-						}))
+						})))
 					}
 					else {
 						console.log('No renderer for ' + event.type + ' implemented.')

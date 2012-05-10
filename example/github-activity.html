@@ -9,7 +9,11 @@
 	<script type="text/javascript">
 		$(function() {
 			$("ul#activity").githubActivityFor('rstrobl', {
-				'limit': 10
+				'limit': 10,
+				'wrap': function(item) {
+					item.prepend('=> ');
+					return item
+				}
 			});
 		});
 	</script>
