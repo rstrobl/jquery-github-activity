@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Example rendering for github activity</title>
+	<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="../lib/jquery.timeago.js"></script>
+	<script type="text/javascript" src="../jquery.github-activity.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("ul#activity").githubActivityFor('rstrobl');
+		});
+	</script>
+</head>
+<body>
+	<ul id="activity"></ul>
+</body>
+</html>
