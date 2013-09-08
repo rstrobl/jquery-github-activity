@@ -10,7 +10,7 @@ This plugin renders the activity of github users as a list to a given element. I
 ## Usage
 
 ```javascript
-$("textarea").githubActivityFor("username", {
+$("#gh-activity").githubActivityFor("username", {
     'limit': 10,                // limit number of event, default: 30 (max)
     'wrap': function(item) {	// post process item element, default: identity
         return item
