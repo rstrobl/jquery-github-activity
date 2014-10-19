@@ -2,11 +2,11 @@
 	$.fn.githubActivityFor = function(username, params) {
 		var githubURL = 'https://github.com/'
 		var params = params || {}
-		
+
 		if('wrap' in params == false) {
 			params['wrap'] = function(item) { return item }
-		}		
-	
+		}
+
 		var userLink = function(user) {
 			return $('<a>', {
 			    text: user.login,
@@ -20,29 +20,36 @@
 			    href: githubURL + repo.name
 			})
 		}
-		
+
 		var branchName = function(ref) {
 			return ref.split('refs/heads/')[1]
 		}
-		
+
 		var issueLink = function(issue) {
 			return $('<a>', {
 			    text: 'issue ' + issue.number,
 			    href: issue.html_url
 			})
 		}
-		
+
 		var pullRequestLink = function(pull_request, comment) {
 			var url = pull_request.html_url
-			
+
 			if(typeof comment !== 'undefined') {
 				url += '#issuecomment-' + comment.id
 			}
-			
+
 			return $('<a>', {
 			    text: 'pull request ' + pull_request.number,
 			    href: url
-			})			
+			})
+		}
+
+		var releaseTag = function(release) {
+			return $('<a>', {
+				text: release.tag_name,
+				href: release.html_url
+			})
 		}
 
 		var renderer = {
@@ -72,21 +79,24 @@
 			},
 			'IssuesEvent': function(event) {
 				return 'opened ' + issueLink(event.payload.issue).prop('outerHTML') + ' on ' + repositoryLink(event.repo).prop('outerHTML')
-			},		
+			},
 			'ForkEvent': function(event) {
 				return 'forked ' + repositoryLink(event.repo).prop('outerHTML')
-			}				
+			},
+			'ReleaseEvent': function(event) {
+				return 'published release ' + releaseTag(event.payload.release).prop('outerHTML') + ' in ' + repositoryLink(event.repo).prop('outerHTML')
+			}
 		}
-				
+
 		this.each(function() {
 			var el = $(this)
-		
-			$.get('https://api.github.com/users/' + username + '/events?callback=?', function(activity) {				
+
+			$.get('https://api.github.com/users/' + username + '/events?callback=?', function(activity) {
 				$.each(activity.data, function(index, event) {
 					if('limit' in params && index == params['limit']) {
 						return false
 					}
-					
+
 					if(event.type in renderer) {
 						el.append(params.wrap($('<li>', {
 							html: userLink(event.actor).prop('outerHTML') + ' ' + renderer[event.type](event) + ' ' + jQuery.timeago(new Date(event.created_at))
@@ -96,7 +106,7 @@
 						console.log('No renderer for ' + event.type + ' implemented.')
 						console.log(event)
 					}
-				})			
+				})
 			}, "json")
 		})
 	}
