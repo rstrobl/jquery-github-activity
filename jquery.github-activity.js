@@ -45,16 +45,25 @@
 			})
 		}
 
-		var releaseTag = function(release) {
+		var tag = function(payload) {
+			return $('<b>', {
+				text: payload.ref,
+			})
+		}
+
+		var releaseName = function(release) {
 			return $('<a>', {
-				text: release.tag_name,
+				text: release.name,
 				href: release.html_url
 			})
 		}
 
 		var renderer = {
 			'CreateEvent': function(event) {
-				return  'created respository ' + repositoryLink(event.repo).prop('outerHTML')
+				if(event.payload.ref_type != 'tag')
+					return  'created respository ' + repositoryLink(event.repo).prop('outerHTML')
+				else
+					return 'created tag ' + tag(event.payload).prop('outerHTML') + ' in ' + repositoryLink(event.repo).prop('outerHTML')
 			},
 			'FollowEvent': function(event) {
 				return 'started following ' + userLink(event.payload.target).prop('outerHTML')
@@ -84,7 +93,7 @@
 				return 'forked ' + repositoryLink(event.repo).prop('outerHTML')
 			},
 			'ReleaseEvent': function(event) {
-				return 'published release ' + releaseTag(event.payload.release).prop('outerHTML') + ' in ' + repositoryLink(event.repo).prop('outerHTML')
+				return 'created release ' + releaseName(event.payload.release).prop('outerHTML') + ' on ' + repositoryLink(event.repo).prop('outerHTML')
 			}
 		}
 
