@@ -58,6 +58,8 @@
 			})
 		}
 
+
+
 		var renderer = {
 			'CreateEvent': function(event) {
 				if(event.payload.ref_type != 'tag')
@@ -94,6 +96,12 @@
 			},
 			'ReleaseEvent': function(event) {
 				return 'created release ' + releaseName(event.payload.release).prop('outerHTML') + ' on ' + repositoryLink(event.repo).prop('outerHTML')
+			},
+			'GollumEvent': function(event) {
+				return 'updated wiki of repository ' + repositoryLink(event.repository).prop('outerHTML')
+			},
+			'MemberEvent': function(event) {
+				return event.action + ' ' + userLink(event.member) + ' to ' + repositoryLink(event.repository)
 			}
 		}
 
