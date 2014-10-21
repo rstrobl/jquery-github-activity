@@ -34,10 +34,10 @@ see http://developer.github.com/v3/events/types/
 * PullRequestEvent
 * DeleteEvent
 * ForkEvent
+* ReleaseEvent
 
 ### Not yet supported
 
-* DownloadEvent
 * ForkApplyEvent
 * GistEvent
 * GollumEvent
