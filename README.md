@@ -38,7 +38,6 @@ see http://developer.github.com/v3/events/types/
 
 ### Not yet supported
 
-* GistEvent
 * GollumEvent
 * MemberEvent
 * PublicEvent
