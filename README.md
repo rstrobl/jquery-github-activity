@@ -35,11 +35,11 @@ see http://developer.github.com/v3/events/types/
 * DeleteEvent
 * ForkEvent
 * ReleaseEvent
+* GollumEvent
+* MemberEvent
 
 ### Not yet supported
 
-* GollumEvent
-* MemberEvent
 * PublicEvent
 * PullRequestReviewCommentEvent
 * TeamAddEvent
