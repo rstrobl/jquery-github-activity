@@ -10,7 +10,7 @@ function userLink(user) {
 function repositoryLink(repo) {
 	return $('<a>', {
 		text: repo.name,
-		href: githubURL + repo.name
+		href: githubURL + repo.full_name
 	})
 }
 
