@@ -106,6 +106,10 @@ function memberEventAction(event) {
 	return event.action + ' ' + userLink(event.member) + ' to ' + repositoryLink(event.repository)
 }
 
+function publicEventAction(event) {
+	return 'set the repository ' + repositoryLink(event.repository).prop('outerHTML') + ' public'
+}
+
 (function($) {
 	$.fn.githubActivityFor = function(username, params) {
 		var githubURL = 'https://github.com/'
@@ -133,7 +137,8 @@ function memberEventAction(event) {
 			'ForkEvent': forkEventAction,
 			'ReleaseEvent': releaseEventAction,
 			'GollumEvent': gollumEventAction,
-			'MemberEvent': memberEventAction
+			'MemberEvent': memberEventAction,
+			'PublicEvent': publicEventAction
 		}
 
 		this.each(function() {
