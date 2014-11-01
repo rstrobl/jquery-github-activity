@@ -71,7 +71,7 @@ function pushEventAction(event) {
 }
 
 function issueCommentEventAction(event) {
-	return 'commented on ' + pullRequestLink(event.payload.issue, event.payload.comment).prop('outerHTML') + ' on ' + repositoryLink(event.repo).prop('outerHTML')
+	return 'commented on ' + issueLink(event.payload.issue, event.payload.comment).prop('outerHTML') + ' on ' + repositoryLink(event.repo).prop('outerHTML')
 }
 
 function pullRequestEventAction(event) {
