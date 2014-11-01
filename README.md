@@ -38,10 +38,10 @@ see https://developer.github.com/v3/activity/events/types
 * ReleaseEvent
 * GollumEvent
 * MemberEvent
+* PublicEvent
 
 ### Not yet supported
 
-* PublicEvent
 * PullRequestReviewCommentEvent
 * TeamAddEvent
 
