@@ -87,7 +87,7 @@ function commitCommentEventAction(event) {
 }
 
 function issueEventAction(event) {
-	return 'opened ' + issueLink(event.payload.issue).prop('outerHTML') + ' on ' + repositoryLink(event.repo).prop('outerHTML')
+	return event.payload.action + issueLink(event.payload.issue).prop('outerHTML') + ' on ' + repositoryLink(event.repo).prop('outerHTML')
 }
 
 function forkEventAction(event) {
@@ -110,6 +110,10 @@ function publicEventAction(event) {
 	return 'set the repository ' + repositoryLink(event.repository).prop('outerHTML') + ' public'
 }
 
+function addEventAction(event) {
+
+}
+
 (function($) {
 	$.fn.githubActivityFor = function(username, params) {
 		var githubURL = 'https://github.com/'
@@ -129,11 +133,11 @@ function publicEventAction(event) {
 			'FollowEvent': followEventAction,
 			'WatchEvent': watchEventAction,
 			'PushEvent': pushEventAction,
-			'IssueCommentEvent': issueEventAction,
+			'IssueCommentEvent': issueCommentEventAction,
 			'PullRequestEvent': pullRequestEventAction,
 			'DeleteEvent': deleteEventAction,
 			'CommitCommentEvent': commitCommentEventAction,
-			'IssuesEvent': issueCommentEventAction,
+			'IssuesEvent': issueEventAction,
 			'ForkEvent': forkEventAction,
 			'ReleaseEvent': releaseEventAction,
 			'GollumEvent': gollumEventAction,
